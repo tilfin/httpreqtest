@@ -117,6 +117,11 @@ var server = http.createServer(function(req, res){
   }
 });
 
+if (module.parent) {
+  module.exports = server;
+  return;
+}
+
 server.listen(port, host);
 console.log("Start listening %s port: %d", host || "", port);
 
