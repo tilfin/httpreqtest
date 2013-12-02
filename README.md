@@ -3,7 +3,6 @@ httpreqtest
 HTTP request test server for Node.js
 
 [![Build Status](https://travis-ci.org/tilfin/httpreqtest.png)](https://travis-ci.org/tilfin/httpreqtest)
-
 [![Coverage Status](https://coveralls.io/repos/tilfin/httpreqtest/badge.png?branch=master)](https://coveralls.io/r/tilfin/httpreqtest?branch=master)
 
 
