@@ -84,3 +84,12 @@ describe('DELETE /sample', function(){
   });
 });
 
+
+describe('HEAD /sample', function(){
+  it('should return 405', function(done){
+    request(app)
+    .head('/sample')
+    .expect(405, done);
+  });
+});
+

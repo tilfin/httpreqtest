@@ -86,8 +86,7 @@ var server = http.createServer(function(req, res){
     query: request.query,
   };
 
-  if (req.method === 'GET' || req.method === 'HEAD'
-      || req.method == 'DELETE') {
+  if (req.method === 'GET' || req.method == 'DELETE') {
     sendJson(res, 200, resbody);
     console.log("\n## Response Body");
     console.log(resbody);
@@ -111,9 +110,8 @@ var server = http.createServer(function(req, res){
     });
 
   } else {
-    sendJson(res, 405, resbody);
-    console.log("\n## Response Body");
-    console.log(resbody);
+    res.writeHead(405, { 'Content-Length': 0 });
+    res.end();
     console.log(LOG_END);
   }
 });
