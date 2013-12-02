@@ -26,6 +26,7 @@ var http = require('http');
 var URL  = require('url');
 var querystring = require('querystring');
 
+
 function sendJson(res, statusCode, entity){
   var json, code = statusCode;
   try {
@@ -41,7 +42,6 @@ function sendJson(res, statusCode, entity){
 }
 
 
-
 function usage(){
   console.log("Usage node httpreqtest.js [options]\n\n" +
               "Options:\n" +
@@ -51,25 +51,26 @@ function usage(){
   process.exit(1);
 }
 
-var port = 8080;
-var host = undefined;
 
-(function(){
-  try {
-    for (var i = 2; i < process.argv.length; i++) {
-      var sp = process.argv[i]
-      if (sp === "-h") {
-        usage();
-      } else if (sp === "-p") {
-        port = parseInt(process.argv[++i], 10);
-      } else if (sp === "-b") {
-        host = process.argv[++i];
-      }
+function optParser(){
+  var port = 8080;
+  var host = undefined;
+
+  for (var i = 2; i < process.argv.length; i++) {
+    var sp = process.argv[i]
+    if (sp === "-h") {
+      usage();
+    } else if (sp === "-p") {
+      port = parseInt(process.argv[++i], 10);
+    } else if (sp === "-b") {
+      host = process.argv[++i];
     }
-  } catch(e) {
-    usage();
   }
-})();
+
+  if (isNaN(port)) usage();
+
+  return { host: host, port: port };
+}
 
 
 var server = http.createServer(function(req, res){
@@ -117,11 +118,13 @@ var server = http.createServer(function(req, res){
   }
 });
 
-if (module.parent) {
-  module.exports = server;
-  return;
-}
 
-server.listen(port, host);
-console.log("Start listening %s port: %d", host || "", port);
+if (module.parent) {
+  exports.server = server;
+  exports.optParser = optParser;
+} else {
+  var param = optParser();
+  server.listen(param.port, param.host);
+  console.log("Start listening %s port: %d", param.host || "", param.port);
+}
 

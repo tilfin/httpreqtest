@@ -1,6 +1,7 @@
 var request = require('supertest'),
     should = require('should'),
-    app = require('../httpreqtest');
+    httpreqtest = require("../httpreqtest"),
+    app = httpreqtest.server;
 
 
 describe('GET /sample', function(){
@@ -26,7 +27,7 @@ describe('GET /sample', function(){
 describe('POST /sample', function(){
   it('should return 200 expected JSON', function(done){
     request(app)
-    .post('/sample')
+    .put('/sample')
     .send('user=taro&age=22')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -44,7 +45,7 @@ describe('POST /sample', function(){
 });
 
 
-describe('POST /sample', function(){
+describe('PUT /sample', function(){
   it('should return 200 expected JSON', function(done){
     request(app)
     .put('/sample')
@@ -82,3 +83,4 @@ describe('DELETE /sample', function(){
     });
   });
 });
+
